@@ -1,5 +1,3 @@
-import LOGO from "./assets/logo.jpg"
-import { useState } from "react";
 import Header from "./components/Header";
 import Routess from "./Routes/Routess";
 import Footer from "./components/Footer";
