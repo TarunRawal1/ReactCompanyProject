@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import LOGO from "../assets/search.jpg";
 import { toast } from "react-toastify";
 import { useSearchContext } from "../context/SearchContext";
 import InfiniteScroll from "react-infinite-scroll-component";
