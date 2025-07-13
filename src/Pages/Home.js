@@ -184,7 +184,7 @@ export default function Home() {
               <p className="text-center my-4 text-gray-400">
                 <b>
                   {!showNoResults
-                    ? !searchedProducts.length == 0 && (
+                    ? !searchedProducts.length === 0 && (
                         <>You have reached to the end of the Page!!</>
                       )
                     : ""}
