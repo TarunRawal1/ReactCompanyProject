@@ -1,4 +1,4 @@
-import React, { useState, useContext, createContext, useReducer } from "react";
+import { useContext, createContext, useReducer } from "react";
 const initalState = {
   searchStatsus: false,
 };

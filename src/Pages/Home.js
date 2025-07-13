@@ -16,46 +16,38 @@ export default function Home() {
   const [hasMore, setHasMore] = useState(true);
   const [listName, setListName] = useState("Latest Updated");
   const [dropdown, setDropdown] = useState(false);
-  const filterSections = [
-    "Sectors",
-    "Formats",
-    "Tags",
-    "Geographies",
-  ];
+  const filterSections = ["Sectors", "Formats", "Tags", "Geographies"];
   const [searchParams] = useSearchParams();
 
-useEffect(() => {
-  const query = searchParams.get("query") || "";
-  console.log("Search Query:", query);
-  setSearchQuery(query);
+  useEffect(() => {
+    const query = searchParams.get("query") || "";
+    console.log("Search Query:", query);
+    setSearchQuery(query);
 
-  const filterGroupMap = {
-    sectors: "Sectors",
-    tags: "Tags",
-    formats: "Formats",
-    geographies: "Geographies",
-    geography: "Geographies", // alias support
-  };
+    const filterGroupMap = {
+      sectors: "Sectors",
+      tags: "Tags",
+      formats: "Formats",
+      geographies: "Geographies",
+      geography: "Geographies",
+    };
 
-  for (const [paramKey, paramValue] of searchParams.entries()) {
-    const normalizedKey = filterGroupMap[paramKey.toLowerCase()];
-    if (normalizedKey) {
-      const values = searchParams.getAll(paramKey).length
-        ? searchParams.getAll(paramKey)
-        : (paramValue || "").split(",");
-      dispatch({
-        type: "SET_SELECTED_FILTERS",
-        payload: {
-          filterGroup: normalizedKey,
-          values,
-        },
-      });
+    for (const [paramKey, paramValue] of searchParams.entries()) {
+      const normalizedKey = filterGroupMap[paramKey.toLowerCase()];
+      if (normalizedKey) {
+        const values = searchParams.getAll(paramKey).length
+          ? searchParams.getAll(paramKey)
+          : (paramValue || "").split(",");
+        dispatch({
+          type: "SET_SELECTED_FILTERS",
+          payload: {
+            filterGroup: normalizedKey,
+            values,
+          },
+        });
+      }
     }
-  }
-
-  // No need to handle 'sort' if you're ignoring it
-}, []);
-
+  }, [dispatch, searchParams]);
 
   const searchedProducts = products.filter((product) =>
     product.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -75,14 +67,13 @@ useEffect(() => {
       }
     }
     fetchAPI();
-  }, [page]);
+  }, [page, setProducts]);
   useEffect(() => {
-    let timeoutId;
-
     if (searchQuery && searchedProducts.length === 0) {
-      timeoutId = setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         setShowNoResults(true);
       }, 1000);
+      return () => clearTimeout(timeoutId);
     } else {
       setShowNoResults(false);
     }
