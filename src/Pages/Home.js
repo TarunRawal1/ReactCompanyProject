@@ -54,16 +54,21 @@ export default function Home() {
   );
   useEffect(() => {
     async function fetchAPI() {
-      const res = await fetch(
-        `https://api.datakeep.civicdays.in/api/search/dataset/?page=${page}`
-      );
-      const data = await res.json();
-      if (res.ok) {
-        setProducts(data.results, page !== 1);
-        setHasMore(data.results.length === 10);
-      } else {
-        console.error("Failed to fetch data");
-        toast.error("Failed to fetch data");
+      try {
+        const res = await fetch(
+          `https://api.datakeep.civicdays.in/api/search/dataset/?page=${page}`
+        );
+        const data = await res.json();
+        if (res.ok) {
+          setProducts(data.results, page !== 1);
+          setHasMore(data.results.length === 10);
+        } else {
+          console.error("Failed to fetch data");
+          toast.error("Failed to fetch data");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        toast.error("Error fetching data");
       }
     }
     fetchAPI();
