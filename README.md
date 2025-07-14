@@ -23,6 +23,9 @@
 - **Sort Dropdown**:
 
   - Options include **Downloads**, **Formats**, and **Latest Updated**.
+  - Downloads set the records with downloads greater than 0
+  - Formats filter records with a required "PDF" format
+  - Lates updated sets teh record based on date after 1st july
 
 - **Visual Tagging**:
 
