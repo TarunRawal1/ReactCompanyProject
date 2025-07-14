@@ -9,6 +9,7 @@ export default function Home() {
   const { searchStatus } = useSearchContext();
   const { setProducts, products, dispatch, state } = useProductContext();
   const [showNoResults, setShowNoResults] = useState(false);
+  const [isCardView, setIsCardView] = useState(false);
 
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -96,8 +97,20 @@ export default function Home() {
             placeholder="Start typing to Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="border-2 rounded p-2 w-full md:w-2/3 mb-4 md:mb-0 focus:outline-none focus:border-blue-500"
+            className="border-2 rounded p-2 w-full md:w-2/3 mb-4 md:mb-0 focus:outline-none focus:border-blue-600"
           />
+          <button
+            onClick={() => setIsCardView(!isCardView)}
+            className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-800 text-white px-3 py-2 rounded-full shadow hover:scale-105 hover:from-blue-700 hover:to-blue-900 transition-all duration-300 ease-in-out"
+          >
+            <i
+              className={`bi ${
+                isCardView ? "bi-list-ul" : "bi-grid-3x3-gap-fill"
+              }`}
+            ></i>
+            {isCardView ? "List View" : "Card View"}
+          </button>
+
           <div className="relative w-full md:w-auto">
             <button
               onClick={() => setDropdown(!dropdown)}
@@ -177,7 +190,11 @@ export default function Home() {
             <Filter key={index} filter={filter} />
           ))}
         </div>
-        <div className="w-full lg:w-4/5 flex-wrap min-h-screen rounded mt-1 shadow-xl">
+        <div
+          className={`w-full lg:w-4/5 min-h-screen rounded mt-1 shadow-xl ${
+            isCardView ? "flex flex-wrap gap-4 justify-start" : ""
+          }`}
+        >
           <InfiniteScroll
             dataLength={searchedProducts.length}
             next={fetchMoreData}
@@ -188,120 +205,131 @@ export default function Home() {
             endMessage={
               <p className="text-center my-4 text-gray-400">
                 <b>
-                  {!showNoResults
-                    ? !searchedProducts.length === 0 && (
-                        <>You have reached to the end of the Page!!</>
-                      )
-                    : ""}
+                  {!showNoResults && searchedProducts.length !== 0 && (
+                    <>You have reached to the end of the Page!!</>
+                  )}
                 </b>
               </p>
             }
           >
-            {showNoResults
-              ? searchedProducts.length === 0 && (
-                  <div className="text-center my-6 text-gray-600 font-semibold text-lg">
-                    Sorry! No results found for your search.
-                  </div>
-                )
-              : ""}
-
-            {searchedProducts.map((product, index) => (
-              <div
-                key={index}
-                className="p-6 mb-4 bg-white border-2 shadow-lg border-gray-200 rounded shadow"
-              >
-                <h2 className="text-lg font-semibold text-blue-800">
-                  {product.title}
-                </h2>
-                <p className="text-gray-600">{product.description}</p>
-                <div className="flex justify-start gap-8 items-center mt-2">
-                  <p className="text-sm text-gray-500">
-                    <i class="bi bi-calendar4 font-bold text-orange-900 text-xl mr-1"></i>{" "}
-                    Last Updated:{" "}
-                    {new Date(product.modified).toLocaleDateString("en-GB", {
-                      day: "numeric",
-                      month: "long",
-                      year: "numeric",
-                    })}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    <i class="bi bi-download text-orange-900 font-bold text-xl mr-1"></i>{" "}
-                    Downloads:{" "}
-                    <span className="text-black">
-                      {product.download_count}+
-                    </span>
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    <i class="bi bi-globe text-xl text-orange-900 font-bold"></i>{" "}
-                    Geography
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    <i class="bi bi-bar-chart text-xl text-orange-900 font-bold"></i>{" "}
-                    With Charts
-                  </p>
-                </div>
-                <div className="flex flex-col md:flex-row justify-between w-full mt-4 mx-4">
-                  <p className="text-sm text-gray-500">
-                    Sectors:{"  "}
-                    {product.sectors.map((item, index) => (
-                      <span
-                        key={index}
-                        className="text-blue-700 font-semibold mr-2 border-2 border-blue-700 rounded px-1"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    Published by:{" "}
-                    <span className="mx-2 font-bold text-gray-700">
-                      {product.organization.name}
-                    </span>
-                  </p>
-                </div>
-                <div className="flex flex-col md:flex-row justify-between w-full mt-4 mx-4">
-                  <p className="text-sm text-gray-500">
-                    Tags:
-                    {product.tags.map((item) => (
-                      <span
-                        key={item}
-                        className=" font-semibold mr-1 border-2 border-tags shadow-md rounded p-1 mx-2 bg-tags text-black"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </p>
-                  <p className="text-sm text-gray-500 flex items-center">
-                    Formats:{" "}
-                    {product.formats.map((item, idx) => (
-                      <span
-                        key={idx}
-                        className="flex items-center ml-2 text-lg items-center justify-center"
-                      >
-                        {item === "PDF" && (
-                          <i className="bi bi-file-earmark-pdf-fill text-red-600"></i>
-                        )}
-                        {item === "CSV" && (
-                          <i className="bi bi-file-earmark-spreadsheet-fill text-green-600"></i>
-                        )}
-                        {item === "XLSX" && (
-                          <i className="bi bi-file-earmark-excel-fill text-green-800"></i>
-                        )}
-                        {item === "JSON" && (
-                          <i className="bi bi-file-earmark-code-fill text-yellow-700"></i>
-                        )}
-                        {item === "XLS" && (
-                          <i className="bi bi-file-earmark-excel-fill text-green-700"></i>
-                        )}
-                        {item === "ZIP" && (
-                          <i className="bi bi-file-earmark-zip-fill text-gray-700"></i>
-                        )}
-                      </span>
-                    ))}
-                  </p>
-                </div>
+            {showNoResults && searchedProducts.length === 0 ? (
+              <div className="text-center my-6 text-gray-600 font-semibold text-lg">
+                Sorry! No results found for your search.
               </div>
-            ))}
+            ) : (
+              <div
+                className={`${
+                  isCardView
+                    ? "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"
+                    : "flex flex-col"
+                }`}
+              >
+                {searchedProducts.map((product, index) => (
+                  <div
+                    key={index}
+                    className={`p-6 mb-4 bg-white border-2 shadow-lg border-gray-200 rounded ${
+                      isCardView ? "" : "w-full"
+                    }`}
+                  >
+                    {/* ✅ Card Content Below */}
+                    <h2 className="text-lg font-semibold text-blue-800">
+                      {product.title}
+                    </h2>
+                    <p className="text-gray-600">{product.description}</p>
+                    <div className="flex justify-start gap-8 items-center mt-2">
+                      <p className="text-sm text-gray-500">
+                        <i className="bi bi-calendar4 font-bold text-orange-900 text-xl mr-1"></i>
+                        Last Updated:{" "}
+                        {new Date(product.modified).toLocaleDateString(
+                          "en-GB",
+                          {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric",
+                          }
+                        )}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        <i className="bi bi-download text-orange-900 font-bold text-xl mr-1"></i>
+                        Downloads:{" "}
+                        <span className="text-black">
+                          {product.download_count}+
+                        </span>
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        <i className="bi bi-globe text-xl text-orange-900 font-bold"></i>{" "}
+                        Geography
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        <i className="bi bi-bar-chart text-xl text-orange-900 font-bold"></i>{" "}
+                        With Charts
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col md:flex-row justify-between w-full mt-4 mx-4">
+                      <div className="text-sm text-gray-500 flex flex-wrap gap-2">
+                        <span className="font-semibold">Sectors:</span>
+                        {product.sectors.map((item, index) => (
+                          <span
+                            key={index}
+                            className="text-blue-700 font-semibold border border-blue-700 rounded px-2 py-0.5"
+                          >
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+
+                      <p className="text-sm text-gray-500">
+                        Published by:{" "}
+                        <span className="mx-2 font-bold text-gray-700">
+                          {product.organization.name}
+                        </span>
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col md:flex-row justify-between w-full mt-4 mx-4">
+                      <div className="text-sm text-gray-500 flex flex-wrap gap-2">
+                        <span className="font-semibold">Tags:</span>
+                        {product.tags.map((item, index) => (
+                          <span
+                            key={index}
+                            className="font-semibold border border-tags bg-tags text-black rounded px-2 py-0.5 shadow"
+                          >
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="text-sm text-gray-500 flex flex-wrap items-center gap-2">
+                        <span className="font-semibold">Formats:</span>
+                        {product.formats.map((item, idx) => (
+                          <span key={idx} className="text-lg flex items-center">
+                            {item === "PDF" && (
+                              <i className="bi bi-file-earmark-pdf-fill text-red-600"></i>
+                            )}
+                            {item === "CSV" && (
+                              <i className="bi bi-file-earmark-spreadsheet-fill text-green-600"></i>
+                            )}
+                            {item === "XLSX" && (
+                              <i className="bi bi-file-earmark-excel-fill text-green-800"></i>
+                            )}
+                            {item === "JSON" && (
+                              <i className="bi bi-file-earmark-code-fill text-yellow-700"></i>
+                            )}
+                            {item === "XLS" && (
+                              <i className="bi bi-file-earmark-excel-fill text-green-700"></i>
+                            )}
+                            {item === "ZIP" && (
+                              <i className="bi bi-file-earmark-zip-fill text-gray-700"></i>
+                            )}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </InfiniteScroll>
         </div>
       </section>
