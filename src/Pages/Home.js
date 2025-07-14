@@ -231,15 +231,14 @@ export default function Home() {
                       isCardView ? "" : "w-full"
                     }`}
                   >
-                    {/* ✅ Card Content Below */}
                     <h2 className="text-lg font-semibold text-blue-800">
                       {product.title}
                     </h2>
                     <p className="text-gray-600">{product.description}</p>
-                    <div className="flex justify-start gap-8 items-center mt-2">
-                      <p className="text-sm text-gray-500">
-                        <i className="bi bi-calendar4 font-bold text-orange-900 text-xl mr-1"></i>
-                        Last Updated:{" "}
+                    <div className="flex flex-wrap gap-4 items-center mt-2 text-sm text-gray-500">
+                      <p className="flex items-center gap-1">
+                        <i className="bi bi-calendar4 text-orange-900 font-bold text-lg"></i>
+                        <span>Last Updated:</span>{" "}
                         {new Date(product.modified).toLocaleDateString(
                           "en-GB",
                           {
@@ -249,30 +248,30 @@ export default function Home() {
                           }
                         )}
                       </p>
-                      <p className="text-sm text-gray-500">
-                        <i className="bi bi-download text-orange-900 font-bold text-xl mr-1"></i>
-                        Downloads:{" "}
+                      <p className="flex items-center gap-1">
+                        <i className="bi bi-download text-orange-900 font-bold text-lg"></i>
+                        <span>Downloads:</span>{" "}
                         <span className="text-black">
                           {product.download_count}+
                         </span>
                       </p>
-                      <p className="text-sm text-gray-500">
-                        <i className="bi bi-globe text-xl text-orange-900 font-bold"></i>{" "}
+                      <p className="flex items-center gap-1">
+                        <i className="bi bi-globe text-orange-900 font-bold text-lg"></i>
                         Geography
                       </p>
-                      <p className="text-sm text-gray-500">
-                        <i className="bi bi-bar-chart text-xl text-orange-900 font-bold"></i>{" "}
+                      <p className="flex items-center gap-1">
+                        <i className="bi bi-bar-chart text-orange-900 font-bold text-lg"></i>
                         With Charts
                       </p>
                     </div>
 
-                    <div className="flex flex-col md:flex-row justify-between w-full mt-4 mx-4">
-                      <div className="text-sm text-gray-500 flex flex-wrap gap-2">
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mt-4 mx-4 text-sm text-gray-500">
+                      <div className="flex flex-wrap items-center gap-2">
                         <span className="font-semibold">Sectors:</span>
                         {product.sectors.map((item, index) => (
                           <span
                             key={index}
-                            className="text-blue-700 font-semibold border border-blue-700 rounded px-2 py-0.5"
+                            className="text-blue-700 border border-blue-700 rounded px-2 py-0.5"
                           >
                             {item}
                           </span>
@@ -280,30 +279,30 @@ export default function Home() {
                       </div>
 
                       <p className="text-sm text-gray-500">
-                        Published by:{" "}
+                        <span className="font-semibold">Published by:</span>{" "}
                         <span className="mx-2 font-bold text-gray-700">
-                          {product.organization.name}
+                          product.organization?.name
                         </span>
                       </p>
                     </div>
 
                     <div className="flex flex-col md:flex-row justify-between w-full mt-4 mx-4">
-                      <div className="text-sm text-gray-500 flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-2 text-sm text-gray-500 mt-4">
                         <span className="font-semibold">Tags:</span>
-                        {product.tags.map((item, index) => (
+                        {product.tags.map((item, idx) => (
                           <span
-                            key={index}
-                            className="font-semibold border border-tags bg-tags text-black rounded px-2 py-0.5 shadow"
+                            key={idx}
+                            className="bg-tags border border-tags text-black rounded px-2 py-0.5 shadow"
                           >
                             {item}
                           </span>
                         ))}
                       </div>
 
-                      <div className="text-sm text-gray-500 flex flex-wrap items-center gap-2">
+                      <div className="flex flex-wrap gap-2 text-sm text-gray-500 mt-4 items-center">
                         <span className="font-semibold">Formats:</span>
                         {product.formats.map((item, idx) => (
-                          <span key={idx} className="text-lg flex items-center">
+                          <span key={idx} className="text-lg">
                             {item === "PDF" && (
                               <i className="bi bi-file-earmark-pdf-fill text-red-600"></i>
                             )}
