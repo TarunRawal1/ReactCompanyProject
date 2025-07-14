@@ -97,11 +97,11 @@ export default function Home() {
             placeholder="Start typing to Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="border-2 rounded p-2 w-full md:w-2/3 mb-4 md:mb-0 focus:outline-none focus:border-blue-600"
+            className="border-2 rounded p-2 m-1 w-full md:w-2/3 mb-4 md:mb-0 focus:outline-none focus:border-blue-600"
           />
           <button
             onClick={() => setIsCardView(!isCardView)}
-            className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-800 text-white px-3 py-2 rounded-full shadow hover:scale-105 hover:from-blue-700 hover:to-blue-900 transition-all duration-300 ease-in-out"
+            className="flex items-center gap-2 my-2 bg-gradient-to-r from-blue-600 to-blue-800 text-white px-3 py-2 rounded-full shadow hover:scale-105 hover:from-blue-700 hover:to-blue-900 transition-all duration-300 ease-in-out"
           >
             <i
               className={`bi ${
@@ -114,7 +114,7 @@ export default function Home() {
           <div className="relative w-full md:w-auto">
             <button
               onClick={() => setDropdown(!dropdown)}
-              className="w-full md:w-auto border-2 p-3 rounded-full hover:bg-gray-800 hover:text-white"
+              className="w-full md:w-auto border-2 sm:m-2 p-3 rounded-full hover:bg-gray-800 hover:text-white"
             >
               {listName}{" "}
               {dropdown ? (
