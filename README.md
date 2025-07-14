@@ -36,7 +36,6 @@
 
   - If search yields no matching datasets, a message is shown after a delay.
 
----
 
 #### **Filter Component**
 
@@ -45,7 +44,6 @@
 - Integrated with global `ProductContext` state.
 - Smooth show/hide toggle via three-dot icon.
 
----
 
 #### **Header Component**
 
