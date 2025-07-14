@@ -1,70 +1,64 @@
-# Getting Started with Create React App
+### **Functionalities Implemented**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### **Home Page**
 
-## Available Scripts
+- **Dynamic Dataset Listing** with infinite scroll using `react-infinite-scroll-component`.
+- **Search & Filtering**:
 
-In the project directory, you can run:
+  - **Live Search**: Users can type into the search bar to filter datasets by title.
+  - Search input is **conditionally rendered** — visible as soon as use starts typing.
+  - Search state is **URL-aware**, enabling deep linking with query parameters via `useSearchParams`.
 
-### `npm start`
+- **Filter System**:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+  - Multi-select filters for **Sectors**, **Formats**, **Tags**, and **Geographies**.
+  - Filters update the dataset listing in real-time.
+  - “Reset” button clears all active filters.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **View Toggle**:
 
-### `npm test`
+  - Toggle between **Card View** and **List View** using a button.
+  - View mode dynamically adjusts layout using Tailwind utility classes.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Sort Dropdown**:
 
-### `npm run build`
+  - Options include **Downloads**, **Formats**, and **Latest Updated**.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Visual Tagging**:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  - Datasets are labeled with associated **tags**, **sectors**, and **formats** using colored badges and icons.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Published Info & Icons**:
 
-### `npm run eject`
+  - Dataset entries show **last updated date**, **download count**, and file format icons (PDF, CSV, XLSX, etc.).
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **No Results Handling**:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  - If search yields no matching datasets, a message is shown after a delay.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+#### **Filter Component**
 
-## Learn More
+- Dropdown for each category: **Sectors**, **Tags**, **Formats**, and **Geographies**.
+- Custom checkboxes for selecting multiple filter options.
+- Integrated with global `ProductContext` state.
+- Smooth show/hide toggle via three-dot icon.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### **Header Component**
 
-### Code Splitting
+- **Responsive Navigation Bar** with logo, main links (All Data, Sectors, Use Cases, etc.), and mobile support.
+- **Search Triggered UI**:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+  - Clicking the search icon in the header toggles the **search bar** on the homepage.
+  - Along with the search bar, it also reveals:
 
-### Analyzing the Bundle Size
+    - **Card/List View toggle button**
+    - **Sort dropdown**
+    - **All active filter sections (Sectors, Formats, Tags, Geographies)**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- **Mobile Menu**:
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  - Hamburger icon opens collapsible menu with all primary links and login/signup button.
