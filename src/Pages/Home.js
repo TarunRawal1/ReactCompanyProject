@@ -281,7 +281,7 @@ export default function Home() {
                       <p className="text-sm text-gray-500">
                         <span className="font-semibold">Published by:</span>{" "}
                         <span className="mx-2 font-bold text-gray-700">
-                          product.organization?.name
+                          {product.organization.name}
                         </span>
                       </p>
                     </div>
